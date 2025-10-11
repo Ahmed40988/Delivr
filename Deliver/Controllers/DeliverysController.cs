@@ -10,9 +10,10 @@ namespace Deliver.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class DeliverysController(IDeliveryService deliveryService) : ControllerBase
+    public class DeliverysController(IDeliveryService deliveryService,ILogger<DeliverysController> logger) : ControllerBase
     {
         private readonly IDeliveryService _deliveryService = deliveryService;
+        private readonly ILogger<DeliverysController> _logger = logger;
 
         [HttpPost("Choose-VehicleType")]
         public async Task<IActionResult> ChooseVehicleType([FromBody] VehicleTypeenum vehicle)
@@ -26,6 +27,7 @@ namespace Deliver.Api.Controllers
         public async Task<IActionResult> CompleteProfile([FromForm] CompleteProfileDeliveryDTO request)
         {
             var userid = User.GetUserId();
+            _logger.LogInformation(" CompleteProfile for Delivery");
             var result = await _deliveryService.CompleteDeliveryProfileasync(userid, request);
             return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
         }

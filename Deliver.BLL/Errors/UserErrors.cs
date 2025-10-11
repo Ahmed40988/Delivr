@@ -51,6 +51,10 @@ namespace Deliver.Dal.Abstractions.Errors
 
         public static readonly Abstractions.Error invalidVehicle =
     new("Delivery.invalidVehicle", "\"Vehicle type does not exist.\"", StatusCodes.Status400BadRequest);
+
+        public static readonly Abstractions.Error DeliveryNotFound =
+new("Delivery.NotFound", "\"Delivery  does not exist.\"", StatusCodes.Status400BadRequest);
+
         public static readonly Abstractions.Error DuplicatedVehicle =
         new("Delivery.DuplicatedVehicle", "\"This vehicle type is already assigned to you.\"", StatusCodes.Status409Conflict);
 
