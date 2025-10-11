@@ -14,7 +14,7 @@ namespace Deliver.Api.Controllers
         private readonly IUserService _userService = userService;
         private readonly IAuthService _authService = authService;
 
-        [HttpGet("Complete-Customer-Profile")]
+        [HttpPost("Complete-Customer-Profile")]
         public async Task<IActionResult> CompleteCustomerProfile(CompleteCustomerDTO request)
         {
             var userid = User.GetUserId();
@@ -23,7 +23,7 @@ namespace Deliver.Api.Controllers
 
         }
 
-        [HttpGet("Get-UserType")]
+        [HttpPost("Get-UserType")]
         public async Task<IActionResult> GetUserType([FromQuery] UserType userType)
         {
             var userid = User.GetUserId();

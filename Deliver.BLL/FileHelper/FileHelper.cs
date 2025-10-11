@@ -8,28 +8,59 @@ namespace Deliver.BLL.FileHelper
 {
     public static class FileHelper
     {
+        /// <summary>
+        /// Uploads a file to a specific folder inside wwwroot. 
+        /// Creates the folder automatically if it doesn't exist.
+        /// </summary>
         public static string UploadFile(IFormFile file, string folderName)
         {
-            // 1. get located folder
+            if (file == null || file.Length == 0)
+                throw new ArgumentException("Invalid file.");
+
+            // 1. Define folder path
             string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName);
-            // 2. get file name and make it unique
-            string fileName = $"{Guid.NewGuid()}{file.FileName}";
-            // 3. get the file paht[folder path + fileName]
+
+            // 2. Ensure the folder exists
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            // 3. Generate a unique file name (to avoid name collisions)
+            string extension = Path.GetExtension(file.FileName);
+            string fileName = $"{Guid.NewGuid()}{extension}";
+
+            // 4. Combine full file path
             string filePath = Path.Combine(folderPath, fileName);
-            // 4. save file as stream
+
+            // 5. Save the file safely
             using var fileStream = new FileStream(filePath, FileMode.Create);
             file.CopyTo(fileStream);
-            // return file name
-            return fileName;
 
+            // 6. Return the stored file name
+            return fileName;
         }
+
+        /// <summary>
+        /// Deletes a file safely from a specific folder if it exists.
+        /// </summary>
         public static void DeleteFile(string fileName, string folderName)
         {
-            // 1. get file path
+            if (string.IsNullOrEmpty(fileName))
+                return;
+
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
-            // 2. check if it not exist
+
             if (File.Exists(filePath))
                 File.Delete(filePath);
         }
+
+        /// <summary>
+        /// Checks if a file exists in a specific folder.
+        /// </summary>
+        public static bool FileExists(string fileName, string folderName)
+        {
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
+            return File.Exists(filePath);
+        }
     }
+
 }
