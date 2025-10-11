@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>222de725-695f-4d73-895a-b5d07ede8488</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="wwwroot\Templates\EmailConfirmation.html" />
+	  <Content Remove="wwwroot\Templates\ForgetPassword.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.10" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		  <PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\Templates\EmailConfirmation.html" />
+	  <None Include="wwwroot\Templates\ForgetPassword.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Deliver.BLL\Deliver.BLL.csproj" />
+		<ProjectReference Include="..\Deliver.Dal\Deliver.Dal.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\Delivery\" />
+	  <Folder Include="wwwroot\category\" />
+	  <Folder Include="wwwroot\Supplier\" />
+	  <Folder Include="wwwroot\subcategory\" />
+	</ItemGroup>
+
+</Project>

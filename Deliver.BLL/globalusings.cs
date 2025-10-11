@@ -1,0 +1,11 @@
+﻿global using Deliver.BLL.Authentication;
+global using Deliver.BLL.DTOs.Account;
+global using Deliver.BLL.Interfaces;
+global using Deliver.Dal.Abstractions;
+global using Deliver.Dal.Abstractions.Errors;
+global using Deliver.Entities.Entities;
+global using Deliver.Entities.Enums;
+global using Deliver.Entities.Interfaces;
+global using Mapster;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Identity;
