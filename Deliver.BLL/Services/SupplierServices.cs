@@ -1,13 +1,15 @@
 ﻿
 using Deliver.BLL.DTOs.Supplier;
 using Deliver.Entities.Entities;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Deliver.BLL.Services;
 
-public class SupplierServices(UserManager<ApplicationUser>userManager , IUnitOfWork unitOfWork) : ISupplierServices
+public class SupplierServices(UserManager<ApplicationUser>userManager , IUnitOfWork unitOfWork , IWebHostEnvironment env) : ISupplierServices
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IWebHostEnvironment _env = env;
 
     public async Task<Result> CreateSupplierAsync(SupplierRequest request)
     {
@@ -22,9 +24,9 @@ public class SupplierServices(UserManager<ApplicationUser>userManager , IUnitOfW
         string newPhotoUrl = supplier.Photo;
         if (request.Image != null)
         {
-            newPhotoUrl = FileHelper.FileHelper.UploadFile(request.Image, "Supplier");
+            newPhotoUrl = FileHelper.FileHelper.UploadFile(request.Image, "Supplier",_env);
             if (!string.IsNullOrEmpty(supplier.Photo))
-                FileHelper.FileHelper.DeleteFile(supplier.Photo, "Supplier");
+                FileHelper.FileHelper.DeleteFile(supplier.Photo, "Supplier",_env);
         }
         user.FirstName = request.OwnerName;
         user.PhoneNumber = request.PhoneNumber;

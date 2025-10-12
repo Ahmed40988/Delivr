@@ -2,13 +2,15 @@
 using Deliver.Dal.Abstractions.Errors;
 using Deliver.Dal.Data;
 using Deliver.Entities.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace Deliver.BLL.Services;
 
-public class SubCategoryServices(ApplicationDbContext context) : ISubCategoryServices
+public class SubCategoryServices(ApplicationDbContext context , IWebHostEnvironment env) : ISubCategoryServices
 {
     private readonly ApplicationDbContext _context = context;
+    private readonly IWebHostEnvironment _env = env;
 
     public async Task<Result> CreateAsync(SubCategoryRequest request)
     {
@@ -22,7 +24,7 @@ public class SubCategoryServices(ApplicationDbContext context) : ISubCategorySer
 
         if (request.Icon != null)
         {
-            var newPhotoUrl = FileHelper.FileHelper.UploadFile(request.Icon, "subcategory");
+            var newPhotoUrl = FileHelper.FileHelper.UploadFile(request.Icon, "subcategory", _env);
             subCategory.Icon = newPhotoUrl;
         }
 
@@ -72,9 +74,9 @@ public class SubCategoryServices(ApplicationDbContext context) : ISubCategorySer
         if (request.Icon != null)
         {
             if (!string.IsNullOrEmpty(subCategory.Icon))
-                FileHelper.FileHelper.DeleteFile(subCategory.Icon, "subcategory");
+                FileHelper.FileHelper.DeleteFile(subCategory.Icon, "subcategory", _env);
 
-            var newPhotoUrl =  FileHelper.FileHelper.UploadFile(request.Icon, "subcategory");
+            var newPhotoUrl =  FileHelper.FileHelper.UploadFile(request.Icon, "subcategory", _env);
             subCategory.Icon = newPhotoUrl;
         }
 
@@ -92,7 +94,7 @@ public class SubCategoryServices(ApplicationDbContext context) : ISubCategorySer
             return Result.Failure<bool>(CategoryError.SubCategoryNotFound);
 
         if (!string.IsNullOrEmpty(subCategory.Icon))
-            FileHelper.FileHelper.DeleteFile(subCategory.Icon, "subcategory");
+            FileHelper.FileHelper.DeleteFile(subCategory.Icon, "subcategory",_env);
 
         _context.subCategories.Remove(subCategory);
         await _context.SaveChangesAsync();

@@ -2,13 +2,15 @@
 using Deliver.Dal.Abstractions.Errors;
 using Deliver.Dal.Data;
 using Deliver.Entities.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace Deliver.BLL.Services;
 
-public class ParentCategoryServices(ApplicationDbContext context) : IParentCategoryServices
+public class ParentCategoryServices(ApplicationDbContext context , IWebHostEnvironment env ) : IParentCategoryServices
 {
     private readonly ApplicationDbContext _context = context;
+    private readonly IWebHostEnvironment _env = env;
 
     public async Task<Result> CreateAsync(ParentCategoryRequest request, CancellationToken cancellationToken = default)
     {
@@ -24,7 +26,7 @@ public class ParentCategoryServices(ApplicationDbContext context) : IParentCateg
 
         if (request.Photo != null)
         {
-            var newPhotoUrl = FileHelper.FileHelper.UploadFile(request.Photo, "category");
+            var newPhotoUrl = FileHelper.FileHelper.UploadFile(request.Photo, "category",_env);
             category.Icon = newPhotoUrl;
         }
 
