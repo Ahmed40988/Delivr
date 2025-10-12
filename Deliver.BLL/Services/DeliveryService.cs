@@ -1,12 +1,14 @@
 ﻿using Deliver.BLL.DTOs.Delivery;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 namespace Deliver.BLL.Services
 {
-    public class DeliveryService(IDeliveryRepository deliveryRepository,UserManager<ApplicationUser> userManager, ILogger<DeliveryService> logger) : IDeliveryService
+    public class DeliveryService(IDeliveryRepository deliveryRepository,UserManager<ApplicationUser> userManager, ILogger<DeliveryService> logger , IWebHostEnvironment env) : IDeliveryService
     {
         private readonly IDeliveryRepository _deliveryRepository = deliveryRepository;
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly ILogger<DeliveryService> _logger = logger;
+        private readonly IWebHostEnvironment _env = env;
 
         public async Task<Result> ChooseVehicleTypeAsync(int userId, VehicleTypeenum vehicleType)
         {
@@ -44,12 +46,12 @@ namespace Deliver.BLL.Services
             {
                 try
                 {
-                    newPhotoUrl = FileHelper.FileHelper.UploadFile(request.Photo, "Delivery");
+                    newPhotoUrl = FileHelper.FileHelper.UploadFile(request.Photo, "Delivery", _env);
                     _logger.LogInformation("Uploaded new photo for user {UserId}: {PhotoUrl}", userid, newPhotoUrl);
 
                     if (!string.IsNullOrEmpty(delivery.PhotoUrl))
                     {
-                        FileHelper.FileHelper.DeleteFile(delivery.PhotoUrl, "Delivery");
+                        FileHelper.FileHelper.DeleteFile(delivery.PhotoUrl, "Delivery", _env);
                         _logger.LogInformation("Deleted old photo for user {UserId}", userid);
                     }
                 }
