@@ -8,13 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="wwwroot\Delivery\**" />
 	  <Compile Remove="wwwroot\Supplier\**" />
-	  <Content Remove="wwwroot\Delivery\**" />
 	  <Content Remove="wwwroot\Supplier\**" />
-	  <EmbeddedResource Remove="wwwroot\Delivery\**" />
 	  <EmbeddedResource Remove="wwwroot\Supplier\**" />
-	  <None Remove="wwwroot\Delivery\**" />
 	  <None Remove="wwwroot\Supplier\**" />
 	</ItemGroup>
 
@@ -56,6 +52,7 @@
 
 	<ItemGroup>
 	  <Folder Include="wwwroot\category\" />
+	  <Folder Include="wwwroot\Delivery\" />
 	  <Folder Include="wwwroot\subcategory\" />
 	</ItemGroup>
 

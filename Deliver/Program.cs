@@ -1,3 +1,4 @@
+using Deliver.BLL.DTOs.Account.Validators;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services
     });
 
 builder.Services.AddEmailConfig(builder.Configuration);
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterDTOValidator>();
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration)

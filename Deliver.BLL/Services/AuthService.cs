@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using Deliver.BLL.DTOs.Email;
 using Deliver.BLL.Helper;
@@ -102,9 +103,11 @@ namespace Deliver.BLL.Services
 
         public async Task<Result> RegisterAsync(RegisterDTO registerDto)
         {
-            var exist = await _userRepository.Any(registerDto.Email);
+            if (!new EmailAddressAttribute().IsValid(registerDto.Email))
+                return Result.Failure(UserErrors.InvalidEmail);
 
-            if (exist == true)
+            var exist = await _userManager.Users.AnyAsync(x=>x.Email==registerDto.Email);
+            if (exist)
                 return Result.Failure<TokenDTO>(UserErrors.DuplicatedEmail);
 
             var user = new ApplicationUser
@@ -123,7 +126,6 @@ namespace Deliver.BLL.Services
             var error = result.Errors.FirstOrDefault();
             return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status409Conflict));
         }
-
         public async Task<Result> ResendConfirmationEmailAsync(ResendConfirmationEmailRequest request)
         {
             if (await _userManager.FindByEmailAsync(request.Email) is not { } user)
