@@ -18,7 +18,7 @@ namespace Deliver.BLL.Services
 
             var vech = await _deliveryRepository.GetVehicleTypeByEnumAsync(vehicleType);
             if (vech == null)
-                return Result.Failure(UserErrors.invalidVehicle);
+                return Result.Failure(UserErrors.InvalidVehicle);
 
             bool alreadyExists = await _deliveryRepository.UserHasVehicleTypeAsync(userId, vech.Id);
             if (alreadyExists)
