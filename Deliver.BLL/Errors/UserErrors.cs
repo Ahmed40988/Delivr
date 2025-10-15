@@ -9,6 +9,8 @@ namespace Deliver.Dal.Abstractions.Errors
 {
     public static class UserErrors
     {
+        public static readonly Abstractions.Error UpdateFailed =
+            new("User.UpdateFailed", "Failed to update user information.", StatusCodes.Status500InternalServerError);
         public static readonly Abstractions.Error InvalidCredentials =
             new("User.InvalidCredentials", "Invalid email/password", StatusCodes.Status401Unauthorized);
 
