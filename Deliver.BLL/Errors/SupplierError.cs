@@ -4,9 +4,12 @@ namespace Deliver.Dal.Abstractions.Errors
 {
     public static class SupplierError
     {
+        public static readonly Abstractions.Error SupplierAlreadyExists =
+         new("Supplier.AlreadyExists", "A supplier profile already exists for this user.", StatusCodes.Status409Conflict);
         public static readonly Abstractions.Error SupplierNotFound =
             new("Supplier.NotFound", "The specified supplier was not found.", StatusCodes.Status404NotFound);
-
+        public static readonly Abstractions.Error UpdateFailed =
+            new("User.UpdateFailed", "Failed to update user information.", StatusCodes.Status500InternalServerError);
         public static readonly Abstractions.Error SupplierDuplicatedShopName =
             new("Supplier.DuplicatedShopName", "A supplier with this shop name already exists.", StatusCodes.Status409Conflict);
 

@@ -7,13 +7,9 @@ namespace Deliver.BLL.Interfaces
 {
     public interface ISupplierServices
     {
-        Task<Result> CreateSupplierAsync(SupplierRequest request);
-
+        Task<Result<Supplier>> CreateSupplierAsync(SupplierRequest request); 
         Task<Result<bool>> UpdateSupplierAsync(int id, SupplierRequest request);
-
-        Task<bool> DeleteSupplierAsync(int id);
-
+        Task<Result> DeleteSupplierAsync(int id);
         Task<Result<SupplierResponse>> GetSupplierByIdAsync(int id);
-
     }
 }
