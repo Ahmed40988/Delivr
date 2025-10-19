@@ -94,13 +94,13 @@ public static class DependencyInjection
                 ValidIssuer = jwtSettings?.Issuer,
                 ValidAudience = jwtSettings?.Audience
             };
-        })
-        .AddGoogle(options =>
-        {
-            var googleAuthSection = configuration.GetSection("Authentication:Google");
-            options.ClientId = googleAuthSection["ClientId"]!;
-            options.ClientSecret = googleAuthSection["ClientSecret"]!;
         });
+        //.AddGoogle(options =>
+        //{
+        //    var googleAuthSection = configuration.GetSection("Authentication:Google");
+        //    options.ClientId = googleAuthSection["ClientId"]!;
+        //    options.ClientSecret = googleAuthSection["ClientSecret"]!;
+        //});
 
         services.Configure<IdentityOptions>(options =>
         {
