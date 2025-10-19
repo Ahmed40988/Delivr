@@ -17,7 +17,6 @@ builder.Services
         typeof(LoginDTO).Assembly,
         typeof(ApplicationDbContext).Assembly
     });
-
 builder.Services.AddEmailConfig(builder.Configuration);
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterDTOValidator>();
