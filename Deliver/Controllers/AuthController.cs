@@ -1,3 +1,4 @@
+using Deliver.BLL.DTOs.Account;
 using Deliver.BLL.DTOs.Email;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -17,6 +18,15 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDTO loginDto)
     {
+        if (loginDto.ExtraData?.Any() == true)
+        {
+            return BadRequest(new
+            {
+                Message = "Unexpected properties found in request body.",
+                ExtraFields = loginDto.ExtraData.Keys
+            });
+        }
+
         var response = await _authService.LoginAsync(loginDto);
         return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
@@ -24,6 +34,15 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDTO registerDto)
     {
+        if (registerDto.ExtraData?.Any() == true)
+        {
+            return BadRequest(new
+            {
+                Message = "Unexpected properties found in request body.",
+                ExtraFields = registerDto.ExtraData.Keys
+            });
+        }
+
         var response = await _authService.RegisterAsync(registerDto);
         return response.IsSuccess ? Ok(response) : response.ToProblem();
     }

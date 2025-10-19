@@ -16,7 +16,6 @@ builder.Services
         typeof(LoginDTO).Assembly,
         typeof(ApplicationDbContext).Assembly
     });
-
 builder.Services.AddEmailConfig(builder.Configuration);
 
 builder.Host.UseSerilog((context, configuration) =>
